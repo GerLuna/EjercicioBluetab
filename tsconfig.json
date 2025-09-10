@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    /* Opciones del Proyecto */
+    "target": "ES2020", // Soluciona el error de '.finally()'. Especifica una versión moderna de JS.
+    "lib": ["ES2020"], // Define las librerías base. ES2020 incluye todo lo necesario para 'console'.
+    "module": "CommonJS", // Resuelve el conflicto de 'import'. Compila a un formato que Node.js entiende.
+    "rootDir": ".", // Directorio raíz de tus archivos TypeScript. Incluye 'src' y 'prisma'.
+    "outDir": "./dist", // Directorio de salida para los archivos JavaScript compilados.
+    "esModuleInterop": true, // Permite una mejor interoperabilidad entre CommonJS y ES Modules.
+    "moduleResolution": "node", // Cómo se resuelven los módulos. Estándar para Node.
+    "forceConsistentCasingInFileNames": true, // Evita problemas entre mayúsculas y minúsculas en los nombres de archivo.
+
+    /* Chequeo de Tipos Estricto */
+    "strict": true, // Habilita todas las opciones de chequeo estricto. Buena práctica.
+
+    /* Opciones Adicionales */
+    "skipLibCheck": true, // Evita el chequeo de tipos en los archivos de declaración (.d.ts). Acelera la compilación.
+    "types": ["node"] // Soluciona los errores de 'process' y 'console'. Carga explícitamente los tipos de Node.js.
+  },
+  "include": ["src/**/*", "prisma/seed.ts"], // Le decimos a TypeScript que también considere el archivo seed.
+  "exclude": ["node_modules"] // Ignoramos la carpeta node_modules.
+}
