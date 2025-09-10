@@ -101,7 +101,6 @@ Debido a la implementación manual para máxima estabilidad, no hay una interfaz
 Bash
 
 # Para Windows (cmd.exe)
-
 curl -X POST -H "Content-Type: application/json" -H "Host: localhost:3000" -d "{\"query\": \"{ user(id: \\\"2\\\") { id name } }\"}" http://localhost:3000/graphql
 
 Respuesta esperada:
