@@ -1,111 +1,138 @@
-## Microservicio Híbrido REST y GraphQL ##
-Este proyecto es un microservicio desarrollado en Node.js y Express como parte de un ejercicio técnico. La aplicación expone una API híbrida que ofrece puntos de acceso tanto REST como GraphQL, y está construida siguiendo principios de Orientación a Objetos y patrones de diseño como Singleton.
+# Microservicio Híbrido REST y GraphQL
 
-## Características Principales ##
-Servidor Express: Construido con Programación Orientada a Objetos.
+Este proyecto es un microservicio desarrollado en Node.js con Express como parte de un ejercicio técnico. La aplicación expone una API híbrida que ofrece puntos de acceso tanto REST como GraphQL, y está construida siguiendo principios de Orientación a Objetos y patrones de diseño como Singleton.
 
-Patrón Singleton: La instancia del servidor es única y se gestiona mediante el patrón Singleton.
+## Características Principales
 
-Seguridad: El acceso a la API está restringido a un dominio específico.
+* **Servidor Express**: Construido con Programación Orientada a Objetos y patrón Singleton.
+* **Seguridad**: El acceso a la API está restringido al dominio `example.com`.
+* **API REST**: Endpoint para consultar usuarios, documentado con **OpenAPI (Swagger)**.
+* **API GraphQL**: Endpoint para consultas flexibles, con una **interfaz interactiva GraphiQL**.
+* **Base de Datos**: Persistencia de datos gestionada con el ORM **Prisma** sobre una base de datos **SQLite**.
+* **Arquitectura Híbrida**: Ambas APIs (REST y GraphQL) conviven y operan en el mismo servicio.
 
-API REST: Incluye un endpoint para consultar usuarios, documentado con OpenAPI (Swagger).
+---
 
-API GraphQL: Proporciona un endpoint para consultas flexibles de datos de usuario.
+## Empezando
 
-Base de Datos: Persistencia de datos gestionada con el ORM Prisma sobre una base de datos SQLite.
+Sigue estas instrucciones para configurar y ejecutar el proyecto en tu entorno local.
 
-Arquitectura Híbrida: Ambas APIs (REST y GraphQL) conviven y operan en el mismo servicio.
+### Prerrequisitos
 
-## Empezando ##
-Sigue estas instrucciones para levantar el proyecto en tu entorno local.
-
-Prerrequisitos
 Asegúrate de tener instalado lo siguiente en tu sistema:
 
-Node.js (se recomienda v18.x o superior)
+* [Node.js] (se recomienda v18.x o superior)
+* npm (se instala automáticamente con Node.js)
 
-npm (se instala automáticamente con Node.js)
+---
 
-## Instalación y Configuración ##
-Clona el repositorio:
+### Instalación y Configuración
 
-Bash
+1.  **Clona el repositorio:**
+    ```bash
+    git clone https://github.com/GerLuna/EjercicioBluetab.git
+    cd EjercicioBluetab
+    ```
 
-git clone https://github.com/GerLuna/EjercicioBluetab.git
+2.  **Instala las dependencias:**
+    Este proyecto usa `express-graphql`, que requiere una bandera especial para resolver conflictos de dependencias con versiones más nuevas de `graphql`.
+    ```bash
+    npm install --legacy-peer-deps
+    ```
 
-cd EjercicioBluetab
+3.  **Configura las variables de entorno:**
+    Crea un archivo `.env` en la raíz del proyecto. Agrega lo siguiente:
+    ```env
+    # .env
+    DATABASE_URL="file:./prisma/dev.db"
+    PORT=3000
+    ```
 
-Instala las dependencias del proyecto:
+4.  **Configura y puebla la base de datos:**
+    Estos comandos crearán el archivo de la base de datos SQLite, aplicarán el esquema y la llenarán con datos de prueba.
+    ```bash
+    # 1. Crear la base de datos y aplicar la migración
+    npx prisma migrate dev --name init
 
-Bash
+    # 2. Poblar la base de datos con usuarios de ejemplo
+    npm run prisma:seed
+    ```
 
-npm install
+---
 
-Configura las variables de entorno:
+## 🏃‍♀️ Ejecutando la Aplicación
 
-Crea el archivo .env
-
-
-# .env
-DATABASE_URL="file:./prisma/dev.db"
-
-PORT=3000
-
-
-Configura y puebla la base de datos:
-
-Estos comandos crearán la base de datos SQLite y la llenarán con datos de prueba.
-
-# Crea el archivo de la base de datos y aplica el esquema
-Bash
-
-npx prisma migrate dev --name init
-
-# Puebla la base de datos con usuarios de ejemplo
-Bash
-
-npm run prisma:seed
-
-npm run dev
+### Modo de Desarrollo
+Para iniciar el servidor con reinicio automático ante cambios:
+```bash
+npm run all
+```
 
 El servidor estará disponible en http://localhost:3000.
 
-# Probando los Endpoints
-Una vez que el servidor esté corriendo, puedes probar las APIs de la siguiente manera.
+## 🧪 Probando los Endpoints
+Una vez que el servidor esté corriendo, puedes probar las APIs y la base de datos.
 
 API REST
-
 Documentación Interactiva (Swagger):
-
-Abre tu navegador y visita http://localhost:3000/api-docs para ver y probar los endpoints.
+Abre tu navegador y visita http://localhost:3000/api-docs para ver y probar los endpoints de forma interactiva.
 
 Prueba con cURL:
 
-# Simula una petición desde un host permitido
 Bash
 
+# Simula una petición desde un host permitido
+1. Consutla Swagger
+```
 curl -H "Host: localhost:3000" http://localhost:3000/api/users/1
-
+```
 Respuesta esperada:
 
 JSON
 
 {"id":1,"name":"Alice"}
-
-API GraphQL
-
-Debido a la implementación manual para máxima estabilidad, no hay una interfaz gráfica. Usa el siguiente comando curl para probarla.
-
-Prueba con cURL:
-
-Para Windows (cmd.exe)
-
-Bash
-
+2. Consulta GraphQL
+```
 curl -X POST -H "Content-Type: application/json" -H "Host: localhost:3000" -d "{\"query\": \"{ user(id: \\\"2\\\") { id name } }\"}" http://localhost:3000/graphql
-
+```
 Respuesta esperada:
 
 JSON
 
 {"data":{"user":{"id":"2","name":"Bob"}}}
+
+# API GraphQL
+
+Interfaz Interactiva (GraphiQL):
+
+Abre tu navegador y visita http://localhost:3000/graphql. Verás una interfaz donde puedes escribir y ejecutar consultas de GraphQL directamente.
+
+Consulta de ejemplo:
+
+GraphQL
+```
+query {
+  user(id: "2") {
+    id
+    name
+  }
+}
+```
+Respuesta esperada en la interfaz:
+
+JSON
+
+{
+  "data": {
+    "user": {
+      "id": "2",
+      "name": "Bob"
+    }
+  }
+}
+
+# Visor de Base de Datos
+
+**Prisma Studio:**
+
+Abre tu navegador y visita http://localhost:5555. Verás una interfaz gráfica para interactuar con tus tablas.
