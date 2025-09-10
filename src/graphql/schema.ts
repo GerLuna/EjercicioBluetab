@@ -14,8 +14,10 @@ export const schema = buildSchema(`
 
 export const root = (prisma: PrismaClient) => ({
   user: async ({ id }: { id: string }) => {
+    const numericId = parseInt(id, 10);
+    if (Number.isNaN(numericId)) return null;
     return await prisma.user.findUnique({
-      where: { id: parseInt(id, 10) },
+      where: { id: numericId },
     });
   },
 });

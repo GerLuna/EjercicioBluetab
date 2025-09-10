@@ -3,21 +3,22 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('Start seeding ...');
-  // Borra datos existentes para evitar duplicados al re-ejecutar
-  await prisma.user.deleteMany({});
-
-  // Crea nuevos usuarios
-  await prisma.user.create({ data: { name: 'Alice' } });
-  await prisma.user.create({ data: { name: 'Bob' } });
-  console.log('Seeding finished.');
+  await prisma.user.createMany({
+    data: [
+      { name: 'Alice' },
+      { name: 'Bob' },
+      { name: 'Charlie' },
+    ],
+  });
 }
 
 main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
+  .then(async () => {
+    console.log('✅ Seed ejecutado correctamente');
     await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error('❌ Error en seed:', e);
+    await prisma.$disconnect();
+    process.exit(1);
   });
