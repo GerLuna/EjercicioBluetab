@@ -60,7 +60,7 @@ Asegúrate de tener instalado lo siguiente en tu sistema:
 
 ---
 
-## 🏃‍♀️ Ejecutando la Aplicación
+## Ejecutando la Aplicación
 
 ### Modo de Desarrollo
 Para iniciar el servidor con reinicio automático ante cambios:
@@ -70,7 +70,7 @@ npm run all
 
 El servidor estará disponible en http://localhost:3000.
 
-## 🧪 Probando los Endpoints
+## Probando los Endpoints
 Una vez que el servidor esté corriendo, puedes probar las APIs y la base de datos.
 
 API REST
