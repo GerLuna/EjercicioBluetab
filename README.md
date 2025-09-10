@@ -1,6 +1,6 @@
 # Microservicio Híbrido REST y GraphQL
 
-Este proyecto es un microservicio desarrollado en Node.js con Express como parte de un ejercicio técnico. La aplicación expone una API híbrida que ofrece puntos de acceso tanto REST como GraphQL, y está construida siguiendo principios de Orientación a Objetos y patrones de diseño como Singleton.
+Este proyecto es un microservicio desarrollado en Node.js con Express. La aplicación expone una API híbrida que ofrece puntos de acceso tanto REST como GraphQL, y está construida siguiendo principios de Orientación a Objetos y patrones de diseño como Singleton.
 
 ## Características Principales
 
